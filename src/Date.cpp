@@ -93,8 +93,10 @@ bool Date::isValid(const Date t_date) {
 	switch (t_date.m_month) {
 	case 1: case 3: case 5: case 7: case 8: case 10: case 12:
 		if (t_date.m_day < 1 || t_date.m_day > 31) return false;
+		else break;
 	case 4: case 6: case 9: case 11:
 		if (t_date.m_day < 1 || t_date.m_day > 30) return false;
+		else break;
 	case 2:
 		auto isLeap = [](const int t_year) {
 			if (t_year % 400 == 0) return true;
@@ -107,6 +109,7 @@ bool Date::isValid(const Date t_date) {
 		else {
 			if (t_date.m_day < 1 || t_date.m_day > 28) return false;
 		}
+		break;
 	}
 	if (t_date.m_hour < 0 || t_date.m_hour > 23) return false;
 	if (t_date.m_minute < 0 || t_date.m_minute > 59) return false;
