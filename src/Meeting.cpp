@@ -6,17 +6,17 @@
 */
 Meeting::Meeting(std::string t_sponsor, std::vector<std::string> t_participator,
                  Date t_startTime, Date t_endTime, std::string t_title)
-                 : m_sponsor(t_sponsor), m_participators(t_participator),
-                 m_startDate(t_startTime), m_endDate(t_endTime),
-                 m_title(t_title) { }
+    : m_sponsor(t_sponsor), m_participators(t_participator),
+      m_startDate(t_startTime), m_endDate(t_endTime), m_title(t_title) {}
 
 /**
 * @brief copy constructor of left value
 */
 Meeting::Meeting(const Meeting &t_meeting)
-: m_sponsor(t_meeting.m_sponsor), m_participators(t_meeting.m_participators),
-m_startDate(t_meeting.m_startDate), m_endDate(t_meeting.m_endDate),
-m_title(t_meeting.m_title) { }
+    : m_sponsor(t_meeting.m_sponsor),
+      m_participators(t_meeting.m_participators),
+      m_startDate(t_meeting.m_startDate), m_endDate(t_meeting.m_endDate),
+      m_title(t_meeting.m_title) {}
 
 /**
 *   @brief get the meeting's sponsor
@@ -35,7 +35,7 @@ void Meeting::setSponsor(const std::string t_sponsor) { m_sponsor = t_sponsor; }
 * @return return a string vector indicate participators
 */
 std::vector<std::string> Meeting::getParticipator(void) const {
-    return m_participators;
+  return m_participators;
 }
 
 /**
@@ -43,7 +43,7 @@ std::vector<std::string> Meeting::getParticipator(void) const {
 *   @param the new participators vector
 */
 void Meeting::setParticipator(const std::vector<std::string> t_participators) {
-    m_participators = t_participators;
+  m_participators = t_participators;
 }
 
 /**
@@ -57,7 +57,7 @@ Date Meeting::getStartDate(void) const { return m_startDate; }
 * @param  the new startdate of a meeting
 */
 void Meeting::setStartDate(const Date t_startTime) {
-    m_startDate = t_startTime;
+  m_startDate = t_startTime;
 }
 
 /**
@@ -90,8 +90,8 @@ void Meeting::setTitle(const std::string t_title) { m_title = t_title; }
 * @return if the user take part in this meeting
 */
 bool Meeting::isParticipator(const std::string t_username) const {
-    if (std::find(m_participators.begin(), m_participators.end(), t_username)
-        != m_participators.end())
-        return true;
-    return false;
+  if (std::find(m_participators.begin(), m_participators.end(), t_username) !=
+      m_participators.end())
+    return true;
+  return false;
 }

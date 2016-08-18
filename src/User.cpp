@@ -5,16 +5,15 @@
 */
 User::User(std::string t_userName, std::string t_userPassword,
            std::string t_userEmail, std::string t_userPhone)
-           : m_name(t_userName), m_password(t_userPassword),
-           m_email(t_userEmail), m_phone(t_userPhone) { }
+    : m_name(t_userName), m_password(t_userPassword), m_email(t_userEmail),
+      m_phone(t_userPhone) {}
 
 /**
 * @brief copy constructor
 */
-User::User(const User &t_user) : m_name(t_user.m_name),
-                                 m_password(t_user.m_password),
-                                 m_email(t_user.m_email),
-                                 m_phone(t_user.m_phone) { }
+User::User(const User &t_user)
+    : m_name(t_user.m_name), m_password(t_user.m_password),
+      m_email(t_user.m_email), m_phone(t_user.m_phone) {}
 
 /**
 * @brief get the name of the user
