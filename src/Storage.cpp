@@ -5,7 +5,9 @@
 #include <map>
 #include <vector>
 
-// private
+/**
+ * The private part of class Storage
+ */
 
 Storage::Storage() { readFromFile(); }
 
@@ -18,6 +20,10 @@ bool Storage::readFromFile(void) {
     std::ifstream file_in;
     std::string relative_path = "../";
 
+    /**
+     * relative_path + Path::userPath is equivalent to
+     * ../data/users.csv
+     */
     file_in.open(relative_path + Path::userPath);
 
     if (!file_in.is_open())
@@ -26,6 +32,13 @@ bool Storage::readFromFile(void) {
     for (int i = 0; !file_in.eof(); i++)
         std::getline(file_in, data[i], '\n');
     for (auto iterator = data.begin(); iterator != data.end(); ++iterator) {
+        /**
+         * Skip the first and last elements.
+         * Because the first element is
+         * "name","password","email","phone".
+         * And the last element is
+         * "" (nothing)
+         */
         if (iterator == data.begin() || iterator == --data.end())
             continue;
 
@@ -51,6 +64,10 @@ bool Storage::readFromFile(void) {
     file_in.clear();
     data.clear();
 
+    /**
+     * relative_path + Path::meetingPath is equivalent to
+     * ../data/meetings.csv
+     */
     file_in.open(relative_path + Path::meetingPath);
 
     if (!file_in.is_open())
@@ -59,6 +76,13 @@ bool Storage::readFromFile(void) {
     for (int i = 0; !file_in.eof(); i++)
         std::getline(file_in, data[i], '\n');
     for (auto iterator = data.begin(); iterator != data.end(); ++iterator) {
+        /**
+         * Skip the first and last elements.
+         * Because the first element is
+         * "sponsor","participator","start date","end date","title".
+         * And the last element is
+         * "" (nothing)
+         */
         if (iterator == data.begin() || iterator == --data.end())
             continue;
 
@@ -135,6 +159,9 @@ bool Storage::writeToFile(void) {
         file_out << "\"";
         std::vector<std::string> t_vec = object.getParticipator();
         for (auto iterator = t_vec.begin(); iterator != t_vec.end(); ++iterator) {
+            /**
+             * The variable judge labels the last element
+             */
             auto judge = --t_vec.end();
             file_out << *iterator;
             if (iterator != judge)
@@ -164,6 +191,7 @@ std::shared_ptr<Storage> Storage::getInstance(void) {
 
 /**
 *   destructor
+*   Destroy the instance.
 */
 Storage::~Storage() { m_instance = std::shared_ptr<Storage>(nullptr); }
 
