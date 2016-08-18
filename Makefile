@@ -22,10 +22,10 @@ $(BUILD_DIR)/AgendaUI.o : $(INC_DIR)/AgendaService.hpp $(INC_DIR)/AgendaUI.hpp $
 $(BUILD_DIR)/AgendaService.o : $(INC_DIR)/Storage.hpp $(INC_DIR)/AgendaService.hpp $(SRC_DIR)/AgendaService.cpp
 	$(CC) $(FLAGS) $(INCLUDE) -c $(SRC_DIR)/AgendaService.cpp -o $(BUILD_DIR)/AgendaService.o
 
-$(BUILD_DIR)/Storage.o : $(INC_DIR)/Storage.hpp $(SRC_DIR)/Storage.cpp
+$(BUILD_DIR)/Storage.o : $(INC_DIR)/User.hpp $(INC_DIR)/Meeting.hpp $(INC_DIR)/Storage.hpp $(SRC_DIR)/Storage.cpp
 	$(CC) $(FLAGS) $(INCLUDE) -c $(SRC_DIR)/Storage.cpp -o $(BUILD_DIR)/Storage.o
 
-$(BUILD_DIR)/Meeting.o : $(INC_DIR)/Meeting.hpp $(SRC_DIR)/Meeting.cpp
+$(BUILD_DIR)/Meeting.o : $(INC_DIR)/Date.hpp $(INC_DIR)/Meeting.hpp $(SRC_DIR)/Meeting.cpp
 	$(CC) $(FLAGS) $(INCLUDE) -c $(SRC_DIR)/Meeting.cpp -o $(BUILD_DIR)/Meeting.o
 
 $(BUILD_DIR)/Date.o : $(INC_DIR)/Date.hpp $(SRC_DIR)/Date.cpp
