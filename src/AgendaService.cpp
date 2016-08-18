@@ -1,5 +1,4 @@
 #include "AgendaService.hpp"
-#include <algorithm>
 
 /**
 * constructor
@@ -23,6 +22,9 @@ bool AgendaService::userLogIn(const std::string userName,
     return t_user.getName() == userName;
   };
   std::list<User> t_list = m_storage->queryUser(t_filter);
+  /**
+  * If the user does not exist, it fails.
+  */
   if (t_list.empty())
     return false;
   else
@@ -45,6 +47,9 @@ bool AgendaService::userRegister(const std::string userName,
     return t_user.getName() == userName;
   };
   std::list<User> t_list = m_storage->queryUser(t_filter);
+  /**
+  * If the user exists, it fails.
+  */
   if (t_list.empty()) {
     m_storage->createUser(User(userName, password, email, phone));
     return true;
@@ -65,12 +70,21 @@ bool AgendaService::deleteUser(const std::string userName,
     return t_user.getName() == userName;
   };
   std::list<User> t_list = m_storage->queryUser(t_filter_1);
+  /**
+  * If the user does not exist or the password is not right, it fails.
+  */
   if (t_list.empty() || t_list.front().getPassword() != password)
     return false;
+  /**
+  * To get all meetings the user taken part in.
+  */
   auto t_filter_2 = [&](const Meeting &t_meeting) {
     return t_meeting.getSponsor() == userName ||
            t_meeting.isParticipator(userName);
   };
+  /**
+  * Delete all meetings the user taken part in.
+  */
   m_storage->deleteMeeting(t_filter_2);
   if (m_storage->deleteUser(t_filter_1) != 0)
     return true;
@@ -104,25 +118,36 @@ bool AgendaService::createMeeting(const std::string userName,
   auto t_filter_1 = [&](const User &t_user) {
     return t_user.getName() == userName;
   };
-  // If the user doesn't exist
+  /**
+  * If the user does not exist, it fails.
+  */
   if (m_storage->queryUser(t_filter_1).empty())
     return false;
 
   auto t_filter_2 = [&](const Meeting &t_meeting) {
     return t_meeting.getTitle() == title;
   };
-  // If there exist title conflict
+  /**
+  * If there exists a title conflict, it fails.
+  */
   if (!m_storage->queryMeeting(t_filter_2).empty())
     return false;
 
   Date t_start = Date::stringToDate(startDate);
   Date t_end = Date::stringToDate(endDate);
+  /**
+  * If any of the two dates is invalid
+  * or start date is greater than end date, it fails.
+  */
   if (!Date::isValid(t_start) || !Date::isValid(t_end) || t_start >= t_end)
     return false;
   auto t_filter_3 = [&](const Meeting &t_meeting) {
     return t_meeting.getSponsor() == userName ||
            t_meeting.isParticipator(userName);
   };
+  /**
+  * If there exists time conflict, it fails.
+  */
   for (auto object : m_storage->queryMeeting(t_filter_3)) {
     if (t_start >= object.getStartDate() && t_start < object.getEndDate())
       return false;
