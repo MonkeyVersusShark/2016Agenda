@@ -176,6 +176,10 @@ bool Storage::writeToFile(void) {
 std::shared_ptr<Storage> Storage::m_instance(nullptr);
 
 /**
+* The public part of class Storage
+*/
+
+/**
 * get Instance of storage
 * @return the pointer of the instance
 */
