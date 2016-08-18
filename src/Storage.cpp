@@ -46,11 +46,23 @@ bool Storage::readFromFile(void) {
     int the_first_comma = t_str.find(',', 0);
     int the_second_comma = t_str.find(',', the_first_comma + 1);
     int the_third_comma = t_str.find(',', the_second_comma + 1);
+    /**
+    * The positions of "\"" are 0 and the_first_comma - 1
+    */
     std::string name = t_str.substr(1, the_first_comma - 2);
+    /**
+    * The positions of "\"" are the_first_comma + 1 and the_second_comma - 1
+    */
     std::string password = t_str.substr(the_first_comma + 2,
                                         the_second_comma - the_first_comma - 3);
+    /**
+    * The positions of "\"" are the_second_comma + 1 and the_third_comma - 1
+    */
     std::string email = t_str.substr(the_second_comma + 2,
                                      the_third_comma - the_second_comma - 3);
+    /**
+    * The positions of "\"" are the_third_comma + 1 and t_str.size() - 1
+    */
     std::string phone =
         t_str.substr(the_third_comma + 2, t_str.size() - the_third_comma - 3);
 
@@ -88,7 +100,13 @@ bool Storage::readFromFile(void) {
     int the_second_comma = t_str.find(',', the_first_comma + 1);
     int the_third_comma = t_str.find(',', the_second_comma + 1);
     int the_fourth_comma = t_str.find(',', the_third_comma + 1);
+    /**
+    * The positions of "\"" are 0 and the_first_comma - 1
+    */
     std::string sponsor = t_str.substr(1, the_first_comma - 2);
+    /**
+    * The positions of "\"" are the_first_comma + 1 and the_second_comma - 1
+    */
     std::string participator = t_str.substr(
         the_first_comma + 2, the_second_comma - the_first_comma - 3);
     std::vector<std::string> all_participators;
@@ -103,10 +121,19 @@ bool Storage::readFromFile(void) {
       if (i == participator.size() - 1)
         all_participators.push_back(temp);
     }
+    /**
+    * The positions of "\"" are the_second_comma + 1 and the_third_comma - 1
+    */
     std::string startTime = t_str.substr(
         the_second_comma + 2, the_third_comma - the_second_comma - 3);
+    /**
+    * The positions of "\"" are the_third_comma + 1 and the_fourth_comma - 1
+    */
     std::string endTime = t_str.substr(the_third_comma + 2,
                                        the_fourth_comma - the_third_comma - 3);
+    /**
+    * The positions of "\"" are the_fourth_comma + 1 and t_str.size() - 1
+    */
     std::string title =
         t_str.substr(the_fourth_comma + 2, t_str.size() - the_fourth_comma - 3);
 
@@ -127,6 +154,10 @@ bool Storage::writeToFile(void) {
   std::ofstream file_out;
   std::string relative_path = "../";
 
+  /**
+  * relative_path + Path::userPath is equivalent to
+  * ../data/users.csv
+  */
   file_out.open(relative_path + Path::userPath);
 
   if (!file_out.is_open())
@@ -143,6 +174,10 @@ bool Storage::writeToFile(void) {
 
   file_out.clear();
 
+  /**
+  * relative_path + Path::meetingPath is equivalent to
+  * ../data/meetings.csv
+  */
   file_out.open(relative_path + Path::meetingPath);
 
   if (!file_out.is_open())
