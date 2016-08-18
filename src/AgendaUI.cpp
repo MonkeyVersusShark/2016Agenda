@@ -126,7 +126,7 @@ void AgendaUI::userLogIn(void) {
     if (operation != "o" && operation != "dc" && operation != "lu" &&
         operation != "cm" && operation != "la" && operation != "las" &&
         operation != "lap" && operation != "qm" && operation != "qt" &&
-        operation != "dm" && operation != "da" && operation != "help")
+        operation != "dm" && operation != "da")
       return false;
     else
       return true;
