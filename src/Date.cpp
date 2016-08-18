@@ -142,9 +142,16 @@ bool Date::isValid(const Date t_date) {
 * @return a date
 */
 Date Date::stringToDate(const std::string t_dateString) {
+  /**
+  * The size of standard format is 16.
+  */
   if (t_dateString.size() != 16)
     return Date();
 
+  /**
+  * The following four indexes label the positions of punctuation mark.
+  * If they are not at the specified positions, the format is not correct.
+  */
   int index[4];
   index[0] = t_dateString.find('-');
   if (index[0] != 4)
