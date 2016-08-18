@@ -1,5 +1,4 @@
 #include "AgendaUI.hpp"
-#include <cstring>
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -151,17 +150,8 @@ void AgendaUI::userLogIn(void) {
 void AgendaUI::userRegister(void) {
   std::cout
       << "\n[register] [user name] [password] [email] [phone]\n[register] ";
-  std::string information;
   std::string username, password, email, phone;
-  std::cin.get();
-  std::getline(std::cin, information);
-  char *temp = new char[information.size() + 1];
-  strcpy(temp, information.c_str());
-  username = std::strtok(temp, " ");
-  password = std::strtok(NULL, " ");
-  email = std::strtok(NULL, " ");
-  phone = std::strtok(NULL, " ");
-  delete[] temp;
+  std::cin >> username >> password >> email >> phone;
   if (username == "" || password == "" || email == "" || phone == "") {
     std::cout << "[error] register fail!\n";
   } else {
