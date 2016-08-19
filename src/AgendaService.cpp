@@ -69,12 +69,6 @@ bool AgendaService::deleteUser(const std::string userName,
   auto t_filter_1 = [&](const User &t_user) {
     return t_user.getName() == userName;
   };
-  std::list<User> t_list = m_storage->queryUser(t_filter_1);
-  /**
-  * If the user does not exist or the password is not right, it fails.
-  */
-  if (t_list.empty() || t_list.front().getPassword() != password)
-    return false;
   /**
   * To get all meetings the user taken part in.
   */
