@@ -260,7 +260,7 @@ void AgendaUI::listAllParticipateMeetings(void) {
 */
 void AgendaUI::queryMeetingByTitle(void) {
   std::cout
-      << "\n[list all meeting meetings] [title]:\n[list all meeting meetings] ";
+      << "\n[query meetings] [title]:\n[query meetings] ";
   std::string title;
   std::cin >> title;
   std::cout.setf(std::ios::left);
@@ -275,12 +275,8 @@ void AgendaUI::queryMeetingByTimeInterval(void) {
             << "[end time(yyyy-mm-dd/hh:mm)]\n[query meetings] ";
   std::string start_time, end_time;
   std::cin >> start_time >> end_time;
-  if (!Date::isValid(Date::stringToDate(start_time)) ||
-      !Date::isValid(Date::stringToDate(end_time)))
-    std::cout << "\n[error] query meetings fail!\n";
-  else
-    printMeetings(
-        m_agendaService.meetingQuery(m_userName, start_time, end_time));
+  std::cout.setf(std::ios::left);
+  printMeetings(m_agendaService.meetingQuery(m_userName, start_time, end_time));
 }
 
 /**
