@@ -36,12 +36,15 @@ TEST(StorageTest, UserCRUD) {
   test1.push_back(test_user_5);
   test1.push_back(test_user_6);
   std::list<User> result1 = test_instance->queryUser(test_filter);
-  EXPECT_EQ(test1, result1);
+  EXPECT_EQ(test1, result1)
+  << "Test for queryUser fails\n";
 
-  EXPECT_EQ(3, test_instance->updateUser(test_filter, test_switcher));
+  EXPECT_EQ(3, test_instance->updateUser(test_filter, test_switcher))
+  << "Test for updateUser fails\n";
   EXPECT_EQ(3, test_instance->deleteUser([&](const User &t_user) {
     return t_user.getPhone() == "56565656";
-  }));
+  }))
+  << "Test for deleteUser fails\n";
 
   std::list<User> test2;
   test2.push_back(test_user_1);
@@ -50,7 +53,8 @@ TEST(StorageTest, UserCRUD) {
   std::list<User> result2 = test_instance->queryUser([&](const User &t_user) {
     return t_user.getEmail() == "GaauMatJe@citsin.com";
   });
-  EXPECT_EQ(test2, result2);
+  EXPECT_EQ(test2, result2)
+  << "Cannot testify updateUser and deleteUser\n";
 }
 
 bool operator==(const Meeting &t_meeting1, const Meeting &t_meeting2) {
@@ -103,12 +107,15 @@ TEST(StorageTest, MeetingCRUD) {
   test1.push_back(test_meeting_2);
   test1.push_back(test_meeting_3);
   std::list<Meeting> result1 = test_instance->queryMeeting(test_filter);
-  EXPECT_EQ(test1, result1);
+  EXPECT_EQ(test1, result1)
+  << "Test for queryMeeting fails\n";
 
-  EXPECT_EQ(3, test_instance->updateMeeting(test_filter, test_switcher));
+  EXPECT_EQ(3, test_instance->updateMeeting(test_filter, test_switcher))
+  << "Test for updateMeeting fails\n";
   EXPECT_EQ(3, test_instance->deleteMeeting([&](const Meeting &t_meeting) {
     return t_meeting.getTitle() == "t90";
-  }));
+  }))
+  << "Test for deleteMeeting fails\n";
 
   std::list<Meeting> test2;
   test2.push_back(test_meeting_4);
@@ -116,5 +123,6 @@ TEST(StorageTest, MeetingCRUD) {
   test2.push_back(test_meeting_6);
   std::list<Meeting> result2 = test_instance->queryMeeting([&](
       const Meeting &t_meeting) { return t_meeting.getSponsor() == "Clown"; });
-  EXPECT_EQ(test2, result2);
+  EXPECT_EQ(test2, result2)
+  << "Cannot testify updateMeeting and deleteMeeting\n";
 }
