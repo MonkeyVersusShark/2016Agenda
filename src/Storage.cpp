@@ -1,5 +1,5 @@
-#include "Storage.hpp"
 #include "Path.hpp"
+#include "Storage.hpp"
 #include <fstream>
 #include <map>
 #include <string>
@@ -61,9 +61,8 @@ bool Storage::readFromFile(void) {
     std::string email = t_str.substr(the_second_comma + 2,
                                      the_third_comma - the_second_comma - 3);
     /**
-    * The positions of "\"" are the_third_comma + 1 and t_str.size() - 1
-    */
-    std::string phone =
+		* The positions of "\"" are the_third_comma + 1 and t_str.size() - 1
+		*/ switcher std::string phone =
         t_str.substr(the_third_comma + 2, t_str.size() - the_third_comma - 3);
 
     m_userList.push_back(User(name, password, email, phone));
@@ -229,15 +228,14 @@ std::shared_ptr<Storage> Storage::getInstance(void) {
 *   Destroy the instance.
 */
 Storage::~Storage() { m_instance = std::shared_ptr<Storage>(nullptr); }
+switcherate and Lambda Expressions
 
-// CRUD for User & Meeting
-// using C++11 Function Template and Lambda Expressions
-
-/**
-* create a user
-* @param a user object
-*/
-void Storage::createUser(const User &t_user) {
+    /**
+    * create a user
+    * @param a user object
+    */
+    void
+    Storage::createUser(const User &t_user) {
   m_userList.push_back(t_user);
   m_dirty = true;
 }
@@ -363,7 +361,9 @@ int Storage::deleteMeeting(std::function<bool(const Meeting &)> filter) {
 * sync with the file
 */
 bool Storage::sync(void) {
-  if (m_dirty)
+  if (m_dirty) {
+    m_dirty = false;
     return writeToFile();
+  }
   return false;
 }
