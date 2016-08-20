@@ -237,7 +237,10 @@ Storage::~Storage() { m_instance = std::shared_ptr<Storage>(nullptr); }
 * create a user
 * @param a user object
 */
-void Storage::createUser(const User &t_user) { m_userList.push_back(t_user); }
+void Storage::createUser(const User &t_user) {
+  m_userList.push_back(t_user);
+  m_dirty = true;
+}
 
 /**
 * query users
@@ -299,6 +302,7 @@ int Storage::deleteUser(std::function<bool(const User &)> filter) {
 */
 void Storage::createMeeting(const Meeting &t_meeting) {
   m_meetingList.push_back(t_meeting);
+  m_dirty = true;
 }
 
 /**
