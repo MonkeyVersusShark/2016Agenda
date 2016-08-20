@@ -9,7 +9,7 @@
 * The private part of class Storage
 */
 
-Storage::Storage() { readFromFile(); }
+Storage::Storage() : m_dirty(false) { readFromFile(); }
 
 /**
 *   read file content into memory
@@ -269,6 +269,7 @@ int Storage::updateUser(std::function<bool(const User &)> filter,
       ++counter;
     }
   }
+  m_dirty = true;
   return counter;
 }
 
@@ -288,6 +289,7 @@ int Storage::deleteUser(std::function<bool(const User &)> filter) {
       ++iterator;
     }
   }
+  m_dirty = true;
   return counter;
 }
 
@@ -329,6 +331,7 @@ int Storage::updateMeeting(std::function<bool(const Meeting &)> filter,
       ++counter;
     }
   }
+  m_dirty = true;
   return counter;
 }
 
@@ -348,10 +351,15 @@ int Storage::deleteMeeting(std::function<bool(const Meeting &)> filter) {
       ++iterator;
     }
   }
+  m_dirty = true;
   return counter;
 }
 
 /**
 * sync with the file
 */
-bool Storage::sync(void) { return writeToFile(); }
+bool Storage::sync(void) {
+  if (m_dirty)
+    return writeToFile();
+  return false;
+}
