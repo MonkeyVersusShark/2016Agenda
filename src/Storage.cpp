@@ -18,7 +18,7 @@ Storage::Storage() : m_dirty(false) { readFromFile(); }
 bool Storage::readFromFile(void) {
   std::map<int, std::string> data;
   std::ifstream file_in;
-  std::string relative_path = "../";
+  const std::string relative_path = "../";
 
   /**
   * relative_path + Path::userPath is equivalent to
@@ -61,8 +61,9 @@ bool Storage::readFromFile(void) {
     std::string email = t_str.substr(the_second_comma + 2,
                                      the_third_comma - the_second_comma - 3);
     /**
-		* The positions of "\"" are the_third_comma + 1 and t_str.size() - 1
-		*/ switcher std::string phone =
+    * The positions of "\"" are the_third_comma + 1 and t_str.size() - 1
+    */
+    std::string phone =
         t_str.substr(the_third_comma + 2, t_str.size() - the_third_comma - 3);
 
     m_userList.push_back(User(name, password, email, phone));
@@ -151,8 +152,7 @@ bool Storage::readFromFile(void) {
 */
 bool Storage::writeToFile(void) {
   std::ofstream file_out;
-  std::string relative_path = "../";
-
+  const std::string relative_path = "../";
   /**
   * relative_path + Path::userPath is equivalent to
   * ../data/users.csv
@@ -227,15 +227,16 @@ std::shared_ptr<Storage> Storage::getInstance(void) {
 *   destructor
 *   Destroy the instance.
 */
-Storage::~Storage() { m_instance = std::shared_ptr<Storage>(nullptr); }
-switcherate and Lambda Expressions
+Storage::~Storage() {
+    sync();
+    m_instance = std::shared_ptr<Storage>(nullptr);
+}
 
-    /**
-    * create a user
-    * @param a user object
-    */
-    void
-    Storage::createUser(const User &t_user) {
+/**
+* create a user
+* @param a user object
+*/
+void Storage::createUser(const User &t_user) {
   m_userList.push_back(t_user);
   m_dirty = true;
 }
