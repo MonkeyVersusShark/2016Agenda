@@ -1,4 +1,5 @@
 #include "Date.hpp"
+#include <cctype>
 #include <cstdlib>
 #include <cstring>
 #include <sstream>
@@ -92,6 +93,8 @@ bool Date::isValid(const Date t_date) {
     return false;
   if (t_date.m_month < 1 || t_date.m_month > 12)
     return false;
+  if (t_date.m_day < 1)
+    return false;
   switch (t_date.m_month) {
   case 1:
   case 3:
@@ -100,18 +103,16 @@ bool Date::isValid(const Date t_date) {
   case 8:
   case 10:
   case 12:
-    if (t_date.m_day < 1 || t_date.m_day > 31)
+    if (t_date.m_day > 31)
       return false;
-    else
-      break;
+    break;
   case 4:
   case 6:
   case 9:
   case 11:
-    if (t_date.m_day < 1 || t_date.m_day > 30)
+    if (t_date.m_day > 30)
       return false;
-    else
-      break;
+    break;
   case 2:
     auto isLeap = [](const int t_year) {
       if (t_year % 400 == 0)
@@ -121,10 +122,10 @@ bool Date::isValid(const Date t_date) {
       return false;
     };
     if (isLeap(t_date.m_year)) {
-      if (t_date.m_day < 1 || t_date.m_day > 29)
+      if (t_date.m_day > 29)
         return false;
     } else {
-      if (t_date.m_day < 1 || t_date.m_day > 28)
+      if (t_date.m_day > 28)
         return false;
     }
     break;
@@ -166,31 +167,21 @@ Date Date::stringToDate(const std::string t_dateString) {
   if (index[3] != 13)
     return Date();
 
-  std::string t_monthString = "";
-  for (int i = index[0] + 1; i < index[1]; i++)
-    t_monthString += t_dateString[i];
-  if (t_monthString.size() != 2)
-    return Date();
-
-  std::string t_str[5];
-  int t_data[5];
-  for (int i = 0; i < index[0]; i++)
-    t_str[0] += t_dateString[i];
-  t_data[0] = std::atoi(t_str[0].c_str());
-  for (int i = 1; i <= 3; i++) {
-    for (int j = index[i - 1] + 1; j < index[i]; j++)
-      t_str[i] += t_dateString[j];
-    t_data[i] = std::atoi(t_str[i].c_str());
+  for (std::size_t i = 0; i < t_dateString.size(); i++) {
+    if (i == index[0] || i == index[1] || i == index[2] || i == index[3])
+      continue;
+    if (!isdigit(t_dateString[i]))
+      return Date();
   }
-  for (int i = index[3] + 1; i < t_dateString.size(); i++)
-    t_str[4] += t_dateString[i];
-  t_data[4] = std::atoi(t_str[4].c_str());
 
-  Date retDate(t_data[0], t_data[1], t_data[2], t_data[3], t_data[4]);
-  if (!isValid(retDate))
-    return Date();
+  int t_data[5];
+  t_data[0] = std::stoi(t_dateString.substr(0, 4));
+  t_data[1] = std::stoi(t_dateString.substr(index[0] + 1, 2));
+  t_data[2] = std::stoi(t_dateString.substr(index[1] + 1, 2));
+  t_data[3] = std::stoi(t_dateString.substr(index[2] + 1, 2));
+  t_data[4] = std::stoi(t_dateString.substr(index[3] + 1, 2));
 
-  return retDate;
+  return Date(t_data[0], t_data[1], t_data[2], t_data[3], t_data[4]);
 }
 
 /**
@@ -282,9 +273,9 @@ bool Date::operator>(const Date &t_date) const {
 * @brief check whether the CurrentDate is  less than the t_date
 */
 bool Date::operator<(const Date &t_date) const {
-  if (!((*this) >= t_date))
-    return true;
-  return false;
+  if ((*this) >= t_date)
+    return false;
+  return true;
 }
 
 /**
@@ -300,7 +291,7 @@ bool Date::operator>=(const Date &t_date) const {
 * @brief check whether the CurrentDate is  less than or equal to the t_date
 */
 bool Date::operator<=(const Date &t_date) const {
-  if (!((*this) > t_date))
-    return true;
-  return false;
+  if ((*this) > t_date)
+    return false;
+  return true;
 }
