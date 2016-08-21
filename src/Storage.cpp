@@ -366,5 +366,5 @@ bool Storage::sync(void) {
     m_dirty = false;
     return writeToFile();
   }
-  return false;
+  return true;
 }
