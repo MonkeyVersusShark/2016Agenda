@@ -81,4 +81,7 @@ TEST(AgendaServiceTest, CreateAndListAndDelete) {
     EXPECT_EQ(1, testService.listAllMeetings("lonelyguy").size()) << "[error] Delete user fails\n";
     EXPECT_TRUE(testService.deleteAllMeetings("lonelyguy")) << "[error] Delete all meetings fails\n";
     EXPECT_EQ(0, testService.listAllMeetings("lonelyguy").size()) << "[error] Delete all meetings fails\n";
+    testService.deleteUser("clown", "222222");
+    testService.deleteUser("bastard", "222222");
+    testService.deleteUser("lonelyguy", "222222");
 }
